@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ]
 
     const tTetromino = [
-        [1, width, width + 1, width * 2 + 2],
+        [1, width, width + 1, width + 2],
         [1, width + 1, width + 2, width * 2 + 1],
         [width, width + 1, width + 2, width * 2 + 1],
         [1, width, width + 1, width * 2 + 1]
@@ -70,6 +70,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // make Tetrominoes move downward every second
     timerId = setInterval(moveDown, 1000)
 
+    // assign functions to keyCodes => eventListeners
+    // keycode.info
+    // 37 = left arrow
+    // 38 = up arrow
+    // 39 = right arrow
+    // 40 = down arrow
+    function control(e) {
+        if (e.keyCode === 37) {
+            moveLeft();
+        } else if (e.keyCode === 38) {
+            // rotate()
+        } else if (e.keyCode === 39) {
+            moveRight()
+        } else if (e.keyCode === 40) {
+            moveDown();
+        }
+    }
+    document.addEventListener('keyup', control)
+
+    // move down function
     function moveDown() {
         undraw();
         currentPosition += width
@@ -99,8 +119,23 @@ document.addEventListener('DOMContentLoaded', () => {
         if (current.some(idx => squares[currentPosition + idx].classList.contains('taken'))) {
             currentPosition += 1
         }
-        
+
         draw();
     }
+
+    // move the tetrominoe right, unless it is at the edge or there is a blockage
+    function moveRight() {
+        undraw();
+        const isAtRightEdge = current.some(idx => (currentPosition + idx) % width === width -1)
+
+        if (!isAtRightEdge) currentPosition += 1
+
+        if (current.some(idx => squares[currentPosition + idx].classList.contains('taken'))) {
+            currentPosition -= 1
+        }
+
+        draw();
+    }
+
 
 })
