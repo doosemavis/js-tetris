@@ -7,6 +7,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let nextRandom = 0;
     let timerId;
     let score = 0;
+    const colors = [
+        'orange',
+        'red',
+        'purple',
+        'green',
+        'blue'
+    ]
 
     // Tetronimoes 
     const lTetromino = [
@@ -59,6 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function draw() {
         current.forEach(idx => {
             squares[currentPosition + idx].classList.add('tetromino')
+            squares[currentPosition + idx].style.backgroundColor = colors[random]
         })
     }
 
@@ -66,6 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function undraw() {
         current.forEach(idx => {
             squares[currentPosition + idx].classList.remove('tetromino')
+            squares[currentPosition + idx].style.backgroundColor = ''
         })
     }
 
@@ -156,9 +165,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // show up-next tetromino in mini-grid
-    const displaySquares = document.querySelectorAll('.mini-grid div')
+    const displaySquares = document.querySelectorAll('.mini-grid div');
     const displayWidth = 4;
-    let displayIndex = 0;
+    const displayIndex = 0;
   
 
     // the Tetrominos without rotations
@@ -174,9 +183,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function displayShape() {
         displaySquares.forEach(square => {
             square.classList.remove('tetromino')
+            square.style.backgroundColor = ''
         })
         upNextTetrominoes[nextRandom].forEach(idx => {
             displaySquares[displayIndex + idx].classList.add('tetromino')
+            displaySquares[displayIndex + idx].style.backgroundColor = colors[nextRandom]
         })
     }
 
@@ -204,6 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 row.forEach(idx => {
                     squares[idx].classList.remove('taken')
                     squares[idx].classList.remove('tetromino')
+                    squares[idx].style.backgroundColor = ''
                 })
                 const squaresRemoved = squares.splice(i, width)
                 squares = squaresRemoved.concat(squares)
