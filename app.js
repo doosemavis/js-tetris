@@ -89,4 +89,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // move the tetrominoe left, unless it is at the edge or there is a blockage
+    function moveLeft() {
+        undraw();
+        const isAtLeftEdge = current.some(idx => (currentPosition + idx) % width === 0)
+
+        if (!isAtLeftEdge) currentPosition -= 1
+
+        if (current.some(idx => squares[currentPosition + idx].classList.contains('taken'))) {
+            currentPosition += 1
+        }
+        
+        draw();
+    }
+
 })
